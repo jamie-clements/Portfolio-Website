@@ -380,5 +380,32 @@
       }
     }
 
-    
-    
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      
+      .tab-button {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0 10px;
+      }
+      
+      .tab-button.active,
+      .tab-button:hover {
+        background-color: var(--primary-color);
+      }
+      
+      .tab-content {
+        display: none;
+      }
+      
+      .tab-content.active {
+        display: block;
+      }
+      
