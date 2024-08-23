@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
               {
                 name: "University of Stirling Undergraduate",
                 location: [56.1465, -3.9203],
-                description: "BSc (Hons) Computer Science (Final Year) Student and IT Assistant within the Information Services Team"
+                description: "BSc (Hons) Computer Science Student and IT Assistant within the Information Services Team"
               },
               {
                 name: "Citi - Tech Summer Analyst",
