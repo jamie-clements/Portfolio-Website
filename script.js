@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
               {
                 name: "University of Stirling Undergraduate",
                 location: [56.1465, -3.9203],
-                description: "BSc (Hons) Computer Science Student and IT Assistant within the Information Services Team"
+                description: "BSc (Hons) Computer Science Student, Teaching and IT Assistant."
               },
               {
                 name: "Citi - Tech Summer Analyst",
@@ -40,9 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: "San Diego State University (Visiting Student)",
                 location: [32.7757, -117.0719],
                 description: "Exchange program in the United States focusing on Artificial Intelligence, Networks & Distributed Systems, Operating Systems and Programming Paradigms." 
+              },
+              {
+                name: "Code For Good Hackathon (Winning Team) - JPMorganChase",
+                location: [55.8642, -4.2518], // Glasgow coordinates
+                description: "Led development of gamified responsive app for 'Another Way' (environmental non-profit)."
               }
             ];
-  
+            
             var customIcon = L.icon({
               iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
               shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -122,49 +127,69 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   
-    // Existing terminal functionality
-    const terminal = document.getElementById('terminal');
-    const input = document.getElementById('terminal-input');
-    
-    const commands = {
-      help: "Available commands: about, skills, projects, contact, clear",
-      about: "Jamie Clements is a passionate computer scientist with expertise in AI, blockchain, and web development.",
-      skills: "Core skills: Python, JavaScript, Java, Machine Learning, Blockchain, Web Development",
-      projects: "Featured projects: AI Chess Engine, Blockchain Voting System, Face Recognition App",
-      contact: "Email: jamieclements72243@email.com | LinkedIn: linkedin.com/in/jamie-clements | GitHub: github.com/jamie-clements",
-      clear: "Clearing the terminal..."
-    };
+    // Terminal functionality
+  const terminal = document.getElementById('terminal');
+  const welcomeElement = document.getElementById('welcome-message');
+  const input = document.getElementById('terminal-input');
   
-    input.addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        const command = input.value.toLowerCase();
-        terminal.innerHTML += `<p>> ${input.value}</p>`;
-        
-        if (command === 'clear') {
-          setTimeout(() => {
-            terminal.innerHTML = 'Clearing terminal... Type Help For More Options';
-          }, 500);
-        } else if (commands[command]) {
-          terminal.innerHTML += `<p>${commands[command]}</p>`;
-        } else {
-          terminal.innerHTML += `<p>Command not recognized. Type 'help' for available commands.</p>`;
-        }
-  
-        input.value = '';
-        terminal.scrollTop = terminal.scrollHeight;
+  const welcomeMessage = "Welcome to Jamie's Interactive Terminal! Type 'help' for a list of commands.";
+  let charIndex = 0;
+
+  const commands = {
+    help: "Available commands: about, skills, projects, contact, clear",
+    about: "Jamie Clements is a passionate computer scientist with expertise in software development, product management, and AI.",
+    skills: "Core skills: Python, JavaScript, Java, Machine Learning, Web Development, Product Management",
+    projects: "Featured projects: AI Chess Engine, Desktop Cleaner, Thread Communication and Synchronization",
+    contact: "Email: jamieclements72243@email.com | LinkedIn: linkedin.com/in/jamie-clements | GitHub: github.com/jamie-clements",
+    clear: "Clearing the terminal..."
+  };
+
+  function typeWelcomeMessage() {
+    if (charIndex < welcomeMessage.length) {
+      welcomeElement.textContent += welcomeMessage.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeWelcomeMessage, 50); // Adjust typing speed here
+    } else {
+      // Enable input after welcome message is fully typed
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  // Intersection Observer to trigger typing effect
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        typeWelcomeMessage();
+        observer.unobserve(entry.target);
       }
     });
-  
-    // Smooth scrolling for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-  
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
+  }, { threshold: 0.5 });
+
+  observer.observe(document.querySelector('.terminal-container'));
+
+  // Disable input initially
+  input.disabled = true;
+
+  input.addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      const command = input.value.toLowerCase();
+      terminal.innerHTML += `<p>> ${input.value}</p>`;
+      
+      if (command === 'clear') {
+        setTimeout(() => {
+          terminal.innerHTML = '<p id="welcome-message">' + welcomeMessage + '</p>';
+        }, 500);
+      } else if (commands[command]) {
+        terminal.innerHTML += `<p>${commands[command]}</p>`;
+      } else {
+        terminal.innerHTML += `<p>Command not recognized. Type 'help' for available commands.</p>`;
+      }
+
+      input.value = '';
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  });
   
     // Handle active nav item
     const navLinks = document.querySelectorAll('nav ul li a');
@@ -233,5 +258,22 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       retina_detect: true
     });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+  
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
   });
   

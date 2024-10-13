@@ -321,6 +321,10 @@
       text-align: center;
       padding: 20px 0;
     }
+    
+    footer p {
+      opacity: 0.40; /* This sets the opacity to 65% */
+    }
 
     header {
       display: flex;
@@ -381,31 +385,143 @@
     }
 
     .tabs {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-      
-      .tab-button {
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin: 0 10px;
-      }
-      
-      .tab-button.active,
-      .tab-button:hover {
-        background-color: var(--primary-color);
-      }
-      
-      .tab-content {
-        display: none;
-      }
-      
-      .tab-content.active {
-        display: block;
-      }
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .tab-button {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      border: 2px solid #2ecc71; /* Light green outline */
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 10px;
+      border-radius: 5px; /* Rounded corners for better appearance */
+      font-weight: bold; /* Make the text more prominent */
+    }
+    
+    .tab-button:hover {
+      background-color: rgba(46, 204, 113, 0.2); /* Slight green tint on hover */
+      border-color: #27ae60; /* Darker green border on hover */
+    }
+    
+    .tab-button.active {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+
+    #welcome-message::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+    }
+    
+    @keyframes blink {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Responsive design adjustments */
+@media screen and (max-width: 768px) {
+  /* Header adjustments */
+  header {
+    flex-direction: column;
+    padding: 10px 5%;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 5px 0;
+  }
+
+  /* Showcase adjustments */
+  #showcase h1 {
+    font-size: 32px;
+  }
+
+  #showcase p {
+    font-size: 16px;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  /* Projects section adjustments */
+  .project-item {
+    flex-direction: column;
+  }
+
+  .project-info, .project-image {
+    width: 100%;
+  }
+
+  .project-image {
+    height: 200px;
+  }
+
+  /* Interactive section adjustments */
+  .interactive-content {
+    flex-direction: column;
+  }
+
+  .terminal-container, .map-container {
+    width: 100%;
+  }
+
+  #map {
+    height: 250px;
+  }
+
+  /* General adjustments */
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Additional adjustments for very small screens */
+@media screen and (max-width: 480px) {
+  #showcase h1 {
+    font-size: 28px;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .project-description {
+    font-size: 14px;
+  }
+
+  .project-tech img {
+    width: 25px;
+    height: 25px;
+  }
+}
       
