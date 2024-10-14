@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   observer.observe(document.querySelector('.terminal-container'));
 
   // Disable input initially
-  input.disabled = true;
+  input.disabled = false;
 
   input.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
@@ -191,35 +191,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-    // Handle active nav item
-    const navLinks = document.querySelectorAll('nav ul li a');
-    const sections = document.querySelectorAll('section');
-  
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - sectionHeight / 3) {
-          current = section.getAttribute('id');
-        }
-      });
-  
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-          link.classList.add('active');
-        }
-      });
-  
-      // Handle navbar opacity
-      const header = document.querySelector('header');
-      if (window.scrollY > 100) {
-        header.classList.add('navbar-scrolled');
-      } else {
-        header.classList.remove('navbar-scrolled');
+  // Handle active nav item
+  const navLinks = document.querySelectorAll('nav ul li a');
+  const sections = document.querySelectorAll('section');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop - sectionHeight / 3) {
+        current = section.getAttribute('id');
       }
     });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
     
     // Particles.js configuration
     particlesJS("particles-js", {
@@ -274,6 +266,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
+
+   // Mobile menu functionality
+  const navToggle = document.querySelector('.nav-toggle');
+  const mobileNav = document.querySelector('.mobile-nav');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('nav-open');
+    navToggle.classList.toggle('active');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close mobile menu when a link is clicked
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('nav-open');
+      navToggle.classList.remove('active');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
     
   });
   

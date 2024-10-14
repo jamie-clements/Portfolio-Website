@@ -27,12 +27,22 @@
     }
     
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      transition: opacity 0.3s ease;
+      opacity: 0.4; /* Set default opacity to 50% */
       background-color: var(--secondary-color);
-      padding: 20px 0;
-      position: fixed;
-      width: 100%;
+      position: fixed; /* Fix the header to the top of the viewport */
       top: 0;
-      z-index: 1000;
+      left: 0;
+      right: 0;
+      z-index: 1000; /* Ensure the header stays on top of other elements */
+    }
+
+    header:hover {
+      opacity: 1; /* Full opacity on hover */
     }
     
     nav ul {
@@ -57,7 +67,7 @@
     }
     
     #showcase {
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x900/?technology') no-repeat center center/cover;
+      position: relative;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -65,8 +75,23 @@
       align-items: center;
       text-align: center;
       padding: 0 20px;
-      position: relative;
       overflow: hidden;
+      background-image: url('images/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+    }
+
+    #showcase::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+      z-index: 1;
     }
     
     #particles-js {
@@ -75,7 +100,22 @@
       height: 100%;
       top: 0;
       left: 0;
+      z-index: 1;
     }
+    
+    #showcase .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    #showcase h1,
+    #showcase p,
+    #showcase .btn,
+    #showcase .profile-image-container {
+      position: relative;
+      z-index: 2;
+    }
+    
     
     #showcase h1 {
       font-size: 50px;
@@ -431,97 +471,189 @@
       100% { opacity: 0; }
     }
 
-    /* Responsive design adjustments */
+    /* ... (previous styles remain unchanged) ... */
+
+/* Navigation styles */
+.desktop-nav {
+  display: flex;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+/* ... (previous styles remain unchanged) ... */
+
+/* Navigation styles */
+.desktop-nav {
+  display: flex;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+/* ... (previous styles remain unchanged) ... */
+
+/* Navigation styles */
+.desktop-nav, .desktop-social {
+  display: flex;
+}
+
+.mobile-nav, .nav-toggle {
+  display: none;
+}
+
+/* Responsive styles */
 @media screen and (max-width: 768px) {
-  /* Header adjustments */
+  body {
+    padding-top: 60px;
+  }
+
   header {
-    flex-direction: column;
     padding: 10px 5%;
-  }
-
-  .logo {
-    margin-bottom: 10px;
-  }
-
-  nav ul {
-    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
-  nav ul li {
-    margin: 5px 0;
+  .logo a {
+    font-size: 20px;
   }
 
-  /* Showcase adjustments */
-  #showcase h1 {
-    font-size: 32px;
+  .desktop-nav, .desktop-social {
+    display: none;
   }
 
-  #showcase p {
-    font-size: 16px;
+  /* Nav toggle button styles */
+  .nav-toggle {
+    display: block;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: opacity 250ms ease;
   }
 
-  .profile-image {
-    width: 150px;
-    height: 150px;
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    display: block;
+    width: 2em;
+    height: 3px;
+    background: var(--text-color);
+    position: relative;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
 
-  /* Projects section adjustments */
-  .project-item {
-    flex-direction: column;
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
   }
 
-  .project-info, .project-image {
-    width: 100%;
+  .hamburger::before { top: -8px; }
+  .hamburger::after { bottom: -8px; }
+
+  .nav-toggle.active .hamburger {
+    transform: rotate(45deg);
   }
 
-  .project-image {
-    height: 200px;
+  .nav-toggle.active .hamburger::before {
+    opacity: 0;
   }
 
-  /* Interactive section adjustments */
-  .interactive-content {
-    flex-direction: column;
+  .nav-toggle.active .hamburger::after {
+    transform: rotate(90deg) translate(-8px);
   }
 
-  .terminal-container, .map-container {
-    width: 100%;
+  /* Mobile nav styles */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    padding: 2em;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
   }
 
-  #map {
-    height: 250px;
+  .mobile-nav.nav-open {
+    display: block;
+    transform: translateX(0);
   }
 
-  /* General adjustments */
-  .container {
-    width: 95%;
-    padding: 10px;
+  .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2em 0;
   }
 
-  .btn {
-    padding: 8px 20px;
-    font-size: 16px;
+  .mobile-nav-links li {
+    margin-bottom: 1em;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
+
+  .mobile-nav.nav-open .mobile-nav-links li {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+  }
+
+  .mobile-nav-links a {
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-decoration: none;
+    display: block;
+    padding: 0.5em 0;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-nav-links a:hover,
+  .mobile-nav-links a:focus {
+    color: var(--primary-color);
+  }
+
+  .mobile-social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+  }
+
+  .mobile-social-icons a {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .mobile-social-icons a:hover,
+  .mobile-social-icons a:focus {
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+
 }
-
-/* Additional adjustments for very small screens */
-@media screen and (max-width: 480px) {
-  #showcase h1 {
-    font-size: 28px;
-  }
-
-  .profile-image {
-    width: 120px;
-    height: 120px;
-  }
-
-  .project-description {
-    font-size: 14px;
-  }
-
-  .project-tech img {
-    width: 25px;
-    height: 25px;
-  }
-}
-      
+  
